@@ -60,3 +60,96 @@ def buscar_livro():
 
     except Exception as e:
         print(f"   Erro inesperado: {e}")
+
+def registrar_emprestimo():
+    listar_livros()
+    if not catalogo:
+        return
+    print("\n--- Registrar Empréstimo ---")
+
+
+    try:
+        numero = int(input("Números do livro: ")) # ValueError se digitar letres
+
+        if numero < 1 or numero > len(catalogo):
+            print("  Número fora do intervalo.")
+            return
+        
+        livro = catalogo[numero - 1]  # -1 porque lista começa em 0
+
+        if not livro["disponivel"]:
+            print(f"  '{livro['titulo']}' já está emprestado.")
+        else:
+            livro["disponivel"] = False
+            print(f"  Empréstimo de '{livro['titulo']}' registrado.")
+
+    except ValueError:
+        print("   Entrada inválida. Digite apenas o número.")
+
+
+def devover_livro():
+    listar_livros()
+    if not catalogo:
+        return
+    print("\n--- Registrar Devolução ---")
+
+    try:
+        numero = int(input("Número do livro a devolver: "))
+        livro  = catalogo[numero - 1] # IndexError se número for negativo ou > len
+
+        if livro["disponivel"]:
+            print(f"   '{livro['titulo']}' já está disponivel.")
+        else:
+            livro["disponivel"] = True
+            print(f"   Devolução de '{livro['titulo']}' registrada.")
+
+    except ValueError:
+        print("   Digite apenas o número do livro.")
+    except IndexError:
+        print("   Número fora da lista. Verifique os livros cadastradas.")
+
+
+def menu():
+    print("\n📚 SISTEMA DE BIBLIOTECA – v1 (em memória)")
+
+    opcoes = {
+        "1": ("Listar livros", listar_livros),
+        "2": ("Adicionar livro", adicionar_livro),
+        "3": ("Buscar livro", buscar_livro),
+        "4": ("Registrar empréstimo", registrar_emprestimo),
+        "5": ("Devolver livro", devover_livro),
+        "0": ("Sair", None),
+    }
+
+    while True:
+        print("\n Opções:")
+        for chave, (descricao, _) in opcoes.items():
+            print(f" [{chave}] {descricao}")
+
+        try:
+            escolha = input("\n Sua escolha: ").strip()
+            if escolha not in opcoes:
+                raise ValueError(f"Opção '{escolha}' inválida.")
+
+        except ValueError as e:
+            print(f"⚠️ {e}")
+            continue  # volta ao while – não executa else/finally abaixo
+
+        else:
+            # Executado SOMENTE quando try termina sem exceção
+            if escolha == "0":
+                print("\n Até logo! 📚")
+                break
+
+            _, funcao = opcoes[escolha]
+            funcao()
+
+        finally:
+            # Executado SEMPRE — com ou sem exceção
+            # Aqui: didático. Em produção: fecha arquivos, conexões, etc.
+            pass
+
+
+if __name__ == "__main__":
+    menu()
+
