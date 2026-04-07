@@ -1,104 +1,178 @@
-import os
-ARQUIVO = os.path.join(os.path.dirname(__file__), "dados.txt") # nome do arquivo onde os jogos serão salvos
-SEPARADOR = "|" # separa os campos no catalogo .txt
+#==============================================================================
+# ARQUIVO: trabalho.py
+#DISCIPLINA: Programação de Sistemas (2026-PS)
+#Aula:14 - Mini Projeto: Sistema de Cadastro de Jogos
+#Integrantes: Kauê Mendes, Luiz Carlos, Luiz
+#==============================================================================
+import os  # isso aqui serve pra mexer com arquivos/pastas
 
-catalogo = [] # lista de dicionários, cada um representando um jogo
+# ===== CONFIGURAÇÕES =====
+# define onde o arquivo vai ficar (no mesmo lugar do código)
+ARQUIVO = os.path.join(os.path.dirname(__file__), "dados.txt") 
 
-def salvar_arquivo(): # grava a lista de jogos no catalogo .txt
-    with open(ARQUIVO, "w", encoding="utf-8") as f: # abre o arquivo para escrita
-        for jogo in catalogo: # para cada jogo na lista
-            linha = SEPARADOR.join([ # junta os campos do jogo em uma linha usando o separador
-                jogo["Nome do jogo"], # campo "Nome do jogo"
-                jogo["Gênero"], # campo "Gênero"
-                jogo["Criador"], # campo "Criador"
-                jogo["Data de lançamento"] # campo "Data de lançamento"
+SEPARADOR = "|"  # separador dos dados dentro do arquivo
+
+catalogo = []  # lista onde ficam os jogos
+
+
+# ===== SALVAR NO ARQUIVO =====
+def salvar_arquivo(): 
+    # abre o arquivo no modo de escrita (apaga e escreve tudo de novo)
+    with open(ARQUIVO, "w", encoding="utf-8") as f: 
+        for jogo in catalogo: 
+            # junta as informações do jogo em uma linha só
+            linha = SEPARADOR.join([ 
+                jogo["Nome do jogo"], 
+                jogo["Gênero"], 
+                jogo["Criador"], 
+                jogo["Data de lançamento"] 
             ])
-            f.write(linha + "\n") # escreve a linha no arquivo, seguida de uma nova linha
+            f.write(linha + "\n")  # escreve no arquivo
 
-def carregar_arquivo(): # lê o arquivo catalogo .txt e preenche a lista de jogos
-    global catalogo # usa a variável global catalogo para armazenar os jogos lidos do arquivo
-    try: # tenta abrir o arquivo para leitura
-        with open(ARQUIVO, "r", encoding="utf-8") as f: # abre o arquivo para leitura
-            for linha in f: # para cada linha do arquivo
-                dados = linha.strip().split(SEPARADOR) # remove espaços em branco e separa os campos usando o separador
-                if len(dados) == 4: # verifica se a linha tem os 4 campos esperados
-                    catalogo.append({ # adiciona um dicionário com os campos do jogo à lista de catalogo
-                        "Nome do jogo": dados[0], # campo "Nome do jogo" é o primeiro elemento da linha
-                        "Gênero": dados[1], # campo "Gênero"
-                        "Criador": dados[2], # campo "Criador"
-                        "Data de lançamento": dados[3] # campo "Data de lançamento"
+
+# ===== CARREGAR DO ARQUIVO =====
+def carregar_arquivo():  
+    global catalogo 
+    catalogo = []  # limpa a lista pra não duplicar
+    
+    try: 
+        with open(ARQUIVO, "r", encoding="utf-8") as f: 
+            for linha in f: 
+                # separa os dados usando o "|"
+                dados = linha.strip().split(SEPARADOR) 
+                
+                # se tiver tudo certo (4 campos), adiciona
+                if len(dados) == 4: 
+                    catalogo.append({ 
+                        "Nome do jogo": dados[0], 
+                        "Gênero": dados[1], 
+                        "Criador": dados[2], 
+                        "Data de lançamento": dados[3] 
                     })
-    except FileNotFoundError: # se o arquivo não existir, inicia com um catalogo vazio e avisa o usuário
+    except FileNotFoundError: 
+        # se não existir arquivo ainda
         print("Arquivo não encontrado, será criado automaticamente.")
 
-def listar_jogos(): # exibe a lista de jogos cadastrados no console
+
+# ===== LISTAR JOGOS =====
+def listar_jogos(): 
     print("\n" + "=" * 50)
     print(" Sistema de Cadastro de Jogos")
     print("=" * 50)
     
-    if not catalogo: # se a lista de jogos estiver vazia, avisa o usuário e retorna
+    # se não tiver nada
+    if not catalogo: 
         print("Nenhum jogo cadastrado.")
         return
           
-    for i, jogo in enumerate(catalogo, 1): # para cada jogo na lista, exibe o número, nome, gênero, criador e data de lançamento
+    # mostra todos os jogos com número
+    for i, jogo in enumerate(catalogo, 1): 
         print(f"{i}. {jogo['Nome do jogo']} - {jogo['Gênero']} | {jogo['Criador']} [{jogo['Data de lançamento']}]")
+    
     print("=" * 50)
 
-def entrada_segura(msg):  # função para ler entrada do usuário, tratando interrupção por teclado (Ctrl+C)
+
+# ===== ENTRADA SEGURA =====
+def entrada_segura(msg): 
     try:
-        return input(msg).strip()
-    except KeyboardInterrupt: # se o usuário pressionar Ctrl+C, captura a exceção e retorna None
+        return input(msg).strip()  # lê o que o usuário digitar
+    except KeyboardInterrupt: 
+        # se apertar Ctrl+C
         print("\nCancelado.")
         return None
 
-def adicionar_jogo(): # função para adicionar um novo jogo ao catalogo, solicitando os dados do usuário e salvando no arquivo
+
+# ===== ADICIONAR JOGO =====
+def adicionar_jogo(): 
     print("\n--- Adicionar jogo ---")
 
-    nome = entrada_segura("Nome: ") # solicita o nome do jogo e armazena na variável nome, usando a função entrada_segura para tratar interrupção por teclado
-    if not nome: return
+    nome = entrada_segura("Nome: ") 
+    if not nome: return  # se não digitar nome, cancela
 
-    genero = entrada_segura("Gênero: ") # solicita o gênero do jogo e armazena na variável genero, usando a função entrada_segura para tratar interrupção por teclado
-    criador = entrada_segura("Criador: ") # solicita o criador do jogo e armazena na variável criador, usando a função entrada_segura para tratar interrupção por teclado
-    data = entrada_segura("Data: ") # solicita a data de lançamento do jogo e armazena na variável data, usando a função entrada_segura para tratar interrupção por teclado
+    genero = entrada_segura("Gênero: ") 
+    criador = entrada_segura("Criador: ") 
+    data = entrada_segura("Data: ") 
 
-    catalogo.append({ # adiciona um dicionário com os dados do jogo à lista de catalogo
+    # verifica se tá tudo preenchido
+    if not genero or not criador or not data:
+        print("Todos os campos são obrigatórios!")
+        return
+
+    # adiciona na lista
+    catalogo.append({ 
         "Nome do jogo": nome,
         "Gênero": genero,
         "Criador": criador,
         "Data de lançamento": data
     })
 
-    salvar_arquivo()  # salva a lista de jogos atualizada no arquivo catalogo .txt
-    print("Jogo salvo no arquivo!")
+    salvar_arquivo()  # salva no arquivo
+    print("Jogo salvo!")
 
-def buscar_jogo(): # função para buscar jogos no catalogo, solicitando um termo de busca e exibindo os jogos que correspondem ao termo
+
+# ===== BUSCAR JOGO =====
+def buscar_jogo(): 
     termo = entrada_segura("Buscar: ")
     if not termo: return
 
-    termo = termo.lower() # converte o termo de busca para minúsculas para facilitar a comparação com os nomes dos jogos
+    termo = termo.lower() 
+    encontrados = False
 
-    for jogo in catalogo: # para cada jogo na lista de catalogo, verifica se o termo de busca está presente no nome do jogo (convertido para minúsculas)
+    # procura pelo nome
+    for jogo in catalogo: 
         if termo in jogo["Nome do jogo"].lower():
-            print(jogo["Nome do jogo"], "-", jogo["Criador"])
+            print(f"{jogo['Nome do jogo']} - {jogo['Gênero']} | {jogo['Criador']} [{jogo['Data de lançamento']}]")
+            encontrados = True
 
-def menu(): # função principal que exibe o menu de opções para o usuário e chama as funções correspondentes às opções escolhidas, além de carregar os jogos do arquivo ao iniciar
-    carregar_arquivo()  
+    if not encontrados:
+        print("Nada encontrado.")
 
-    while True: # loop infinito para exibir o menu até que o usuário escolha sair
-        print("\n1-Listar 2-Adicionar 3-Buscar 0-Sair")
+
+# ===== REMOVER JOGO =====
+def remover_jogo():
+    listar_jogos()
+
+    if not catalogo:
+        return
+
+    try:
+        # pede o número do jogo
+        indice = int(entrada_segura("Número do jogo para remover: "))
+        
+        if 1 <= indice <= len(catalogo):
+            removido = catalogo.pop(indice - 1)  # remove da lista
+            salvar_arquivo()
+            print(f"Jogo '{removido['Nome do jogo']}' removido!")
+        else:
+            print("Número inválido.")
+    
+    except (ValueError, TypeError):
+        print("Entrada inválida.")
+
+
+# ===== MENU =====
+def menu(): 
+    carregar_arquivo()  # carrega tudo quando começa  
+
+    while True: 
+        print("\n1-Listar 2-Adicionar 3-Buscar 4-Remover 0-Sair")
         op = entrada_segura("Escolha: ")
 
-        if op == "1": # se o usuário escolher a opção 1, chama a função listar_jogos para exibir a lista de jogos cadastrados
+        if op == "1": 
             listar_jogos()
-        elif op == "2": # se o usuário escolher a opção 2, chama a função adicionar_jogo para solicitar os dados de um novo jogo e adicioná-lo ao catalogo
+        elif op == "2": 
             adicionar_jogo()
-        elif op == "3": # se o usuário escolher a opção 3, chama a função buscar_jogo para solicitar um termo de busca e exibir os jogos que correspondem ao termo
+        elif op == "3": 
             buscar_jogo()
-        elif op == "0": # se o usuário escolher a opção 0, chama a função salvar_arquivo para garantir que os jogos sejam salvos no arquivo antes de sair, e depois quebra o loop para encerrar o programa
+        elif op == "4":
+            remover_jogo()
+        elif op == "0": 
             salvar_arquivo()
             break
         else:
             print("Inválido")
 
-if __name__ == "__main__": # se este arquivo for executado diretamente, chama a função
-    menu() # para iniciar o programa, exibindo o menu e permitindo ao usuário interagir com o sistema de cadastro de jogos
+
+# inicia o programa
+if __name__ == "__main__": 
+    menu()
