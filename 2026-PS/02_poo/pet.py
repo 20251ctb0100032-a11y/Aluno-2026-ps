@@ -95,14 +95,7 @@ class Pet:
                 print(f"{self.nome} não está hospedado.")
 
     def calcular_diaria(self):
-        '''
-        Calcula o valor da diária do pet com base na espécie e idade.
-        
-        Para simplificar, vamos usar uma tabela fixa:
-        - Cachorro: R$ 40 por dia
-        - Gato: R$ 50 por dia
-        - Outros: R$ 30 por dia
-        '''
+
         if self.especie.lower() == "cachorro":
             return 40
         elif self.especie.lower() == "gato":
