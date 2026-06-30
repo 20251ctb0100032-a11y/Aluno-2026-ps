@@ -1,4 +1,4 @@
-public class Top {
+public class Top5 {
 
     static double calcularFrete(double peso) {
         if (peso <= 1) {

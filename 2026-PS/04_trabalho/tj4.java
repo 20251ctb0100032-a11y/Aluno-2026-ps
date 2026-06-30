@@ -1,4 +1,4 @@
-public class tj {
+public class tj4{
 
     // Soma de inteiros
     static int somar(int a, int b) {

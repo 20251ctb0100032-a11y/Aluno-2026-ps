@@ -1,4 +1,4 @@
-public class  hq {
+public class  hq2 {
 
     // Exibe apenas o nome do produto
     static void exibirProduto(String nome) {

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class desconto {
+public class desconto1 {
 
     static double calcularDesconto(double valor, double percentual) {
         return valor - (valor * percentual / 100);

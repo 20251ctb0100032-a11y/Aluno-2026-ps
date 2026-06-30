@@ -1,4 +1,4 @@
-public class Main {
+public class Main3{
 
     static int maiorNumero(int a, int b) {
         if (a > b) {
