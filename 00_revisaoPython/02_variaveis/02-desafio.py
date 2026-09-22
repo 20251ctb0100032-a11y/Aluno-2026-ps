@@ -1,0 +1,117 @@
+# =====================================
+# SISTEMA DE APROVAÇÃO DE ALUNOS
+# =====================================
+# Disciplina : Programação de Sistemas (PS)
+# Aula       : 04 - Revisão: Variáveis, Tipos e Controle de Fluxo
+# Autor      : [Luiz Carlos Oliveira Neto]
+# Data       : [12/03/2025]
+# Repositorio: https://github.com/20251ctb0100032-a11y/Aluno-2026-ps.git
+# =====================================
+#
+# DESCRIÇÃO:
+# Este programa processa as notas de uma turma e determina
+# a situação de cada aluno (Aprovado, Recuperação ou Reprovado).
+# Conceitos utilizados: variáveis, tipos de dados, operadores,
+# estruturas de seleção e estruturas de repetição.
+# =====================================
+# ------- ENTRADA DE DADOS --------
+
+print("=== Sistema de Aprovação de Alunos ===")
+print() # linha em branco para organizar a saída
+
+nome = input("Digite o nome do aluno: ")  # str - texto
+nota1 = float(input("Digite a nota 1 (0 a 10):  ")) # float - decimal
+nota2 = float(input("Digite a nota 2 (0 a 10):  ")) # float - decimal
+
+# ----- PROCESSAMENTO -----
+
+media = (nota1 + nota2) / 2 # operador aritmético: soma e divisão
+
+print()
+print(f"Aluno : {nome}")
+print(f"Nota 1 : {nota1:.1f}")
+print(f"Nota 2 : {nota2:.1f}")
+print(f"Média  : {media:.2f}") # :.2f = exibe com 2 casas decimais
+
+#  ----- DECISÂO -----
+if media >= 6.0:                        # condição principal
+    situacao = "✅ Aprovado"
+elif media>= 4.0:                       # condição alternativa (so verificada a anterior for falsa)
+    situacao = "⚠️  Recuperação"
+else:                                   # caso nenhuma condição anterior seja
+# verdadeira
+    situacao = "❌  Reprovado"
+
+print(f"Situação: {situacao}")
+print("-" * 40) # linha separadora: repete o caractere "-" 40 veses
+
+# ---- DADOS DA TURMA ----
+# Uma lista de dicionários: cada dicionário representa um aluno
+turma = [
+    {"nome": "Ana", "nota1": 8.0, "nota2": 7.5},
+    {"nome": "Bruno", "nota1": 4.5, "nota2": 5.0},
+    {"nome": "Carla", "nota1": 2.0, "nota2": 3.5},
+]
+
+print("=== Resultado da Turma ===")
+print()
+
+# O 'for' percorre cada aluno da lista automaticamente
+for aluno in turma:
+    nome = aluno["nome"]
+    nota1 = aluno["nota1"]
+    nota2 = aluno["nota2"]
+    media = (nota1 + nota2) / 2
+
+    if media >= 6.0:
+        situacao = "✅ Aprovado"
+    elif media >= 4.0:
+        situacao = "⚠️ Recuperação"
+    else:
+        situacao = "❌ Reprovado"
+
+    print(f"Aluno    : {nome}")
+    print(f"Média    : {media:.2f}")
+    print(f"Situação : {situacao}")
+    print("-" * 30)
+
+continuar = "s"
+
+while continuar == "s":
+    print("\nDeseja processar outro aluno? (s/n): ", end="")
+    continuar = input().lower()
+
+    if continuar == "s":
+        # Peça nome, nota1 e nota2
+        nome = input("Digite o nome do aluno: ")
+        nota1 = float(input("Digite a primeira nota: "))
+        nota2 = float(input("Digite a segunda nota: "))
+
+        # Calcule a média
+        media = (nota1 + nota2) / 2
+
+        # Exiba a situação (Exemplo: aprovado se média >= 7)
+        situacao = "Aprovado" if media >= 7 else "Reprovado"
+        
+        print(f"O aluno {nome} obteve média {media:.1f} e está {situacao}.")
+
+         # Arquivo: 01b-debug.py
+# Código corrigido
+
+nome = input("Digite o nome do aluno: ")
+nota1 = float(input("Digite a nota 1: "))
+nota2 = float(input("Digite a nota 2: "))
+
+# Adicionado parênteses para garantir a ordem correta do cálculo
+media = (nota1 + nota2) / 2
+
+if media >= 6.0:
+    situacao = "Aprovado"
+elif media >= 4.0:
+    situacao = "Recuperação"
+else:
+    situacao = "Reprovado"
+
+# Corrigido 'print' e o uso de chaves {} na f-string
+print(f"Aluno: {nome} | Média: {media:.2f} | Situação: {situacao}")
+ 
