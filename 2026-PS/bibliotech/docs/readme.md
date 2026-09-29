@@ -46,8 +46,3 @@ Sistema de emprestimo de livros para a biblioteca do campus.
 ### Classes
 ​
 ![Diagrama de classes do BiblioTech](docs/classes.svg)
-
-## 5. O que o codigo devolveu ao diagrama (Aula 37)
-
-- Livro ganhou o atributo disponivel: boolean, porque estaDisponivel()
-- Leitor ganhou livrosEmMaos: int, porque podePegarEmprestado()
