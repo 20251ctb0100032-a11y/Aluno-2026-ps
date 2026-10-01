@@ -12,7 +12,7 @@ public class Bibliotecario extends Usuario {
 
     public Bibliotecario(String nome, String matricula, String matriculaFuncional) {
         super(nome, matricula);
-        this.matriculaFuncional = matriculaFuncional;
+        this.matriculaFuncional = matriculaFuncional9cvx;
     }
 
     public String getMatriculaFuncional() {
