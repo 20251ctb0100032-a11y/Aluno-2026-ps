@@ -12,7 +12,7 @@ public class Bibliotecario extends Usuario {
 
     public Bibliotecario(String nome, String matricula, String matriculaFuncional) {
         super(nome, matricula);
-        this.matriculaFuncional = matriculaFuncional9cvx;
+        this.matriculaFuncional = matriculaFuncional;
     }
 
     public String getMatriculaFuncional() {
@@ -20,7 +20,7 @@ public class Bibliotecario extends Usuario {
     }
 
     // OPERACAO DA CAIXA: consultarAcervo(). Em construcao: o acervo
-    // de livros) so existe a partir da Aula 39. Por enquanto, sempre
+    // de livros so existe a partir da Aula 39. Por enquanto, sempre
     public boolean consultarAcervo() {
         return true;
     }

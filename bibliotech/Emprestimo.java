@@ -10,8 +10,9 @@ public class Emprestimo {
 
     public Emprestimo(Livro livro, Leitor leitor) {
         if (livro == null || leitor == null) {
-            throw new IllegalArgumentException("Livro e Leitor sao obrigatorios.");
+            throw new IllegalArgumentException("Livro e leitor sao obrigatorios.");
         }
+
         this.livro = livro;
         this.leitor = leitor;
         this.ativo = false;
@@ -58,7 +59,7 @@ public class Emprestimo {
         return dataDevolucao;
     }
 
-    public boolean isAtivo() {
+    public boolean estaAtivo() {
         return ativo;
     }
 
@@ -68,8 +69,8 @@ public class Emprestimo {
             return "Emprestimo ainda nao realizado: " + livro.getTitulo();
         }
 
-        String situacao = ativo 
-            ? "ativo" 
+        String situacao = ativo
+            ? "ativo"
             : "devolvido em " + dataDevolucao;
 
         return livro.getTitulo() + " para " + leitor.getNome()

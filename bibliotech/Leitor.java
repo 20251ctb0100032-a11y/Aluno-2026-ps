@@ -8,12 +8,11 @@
 
 public class Leitor extends Usuario {
 
-    // So o que a caixa Leitor acrescenta. Nome e matricula ja vem de Usuario.
     private int limiteEmprestimos;
-    private int livrosEmMaos; // nao estava na caixa: o codigo precisa controlar isso
+    private int livrosEmMaos;
 
     public Leitor(String nome, String matricula, int limiteEmprestimos) {
-        super(nome, matricula); // Correção: Chamada correta do construtor do Usuario
+        super(nome, matricula);
         this.limiteEmprestimos = limiteEmprestimos;
         this.livrosEmMaos = 0;
     }
@@ -26,12 +25,10 @@ public class Leitor extends Usuario {
         return livrosEmMaos;
     }
 
-    // OPERAÇÃO DA CAIXA: podePegarEmprestado().
     public boolean podePegarEmprestado() {
         return livrosEmMaos < limiteEmprestimos;
     }
 
-    // Os dois métodos que o empréstimo vai usar na Aula 38.
     public void pegueiLivro() {
         this.livrosEmMaos = this.livrosEmMaos + 1;
     }
@@ -42,7 +39,6 @@ public class Leitor extends Usuario {
 
     @Override
     public String toString() {
-        // Correção: Uso de getNome() em vez de 'this.nome', pois o atributo é private na classe pai
         return "Leitor: " + getNome() + " (" + getMatricula() + ") - "
                 + livrosEmMaos + " de " + limiteEmprestimos + " livros";
     }
