@@ -26,7 +26,7 @@ public class Usuario {
 
     // entrar(): a operacao da caixa. Regra provisoria: entra qu
     public boolean entrar() {
-        return matricula.isEmpty();
+        return !matricula.isEmpty();
     }
 
     public String toString() {
