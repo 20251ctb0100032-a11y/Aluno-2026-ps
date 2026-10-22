@@ -1,9 +1,11 @@
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.*;
 
 public class TelaBiblioteca extends JFrame {
+
     private Biblioteca biblioteca;
     private JTextField campoTitulo;
     private JTextField campoMatricula;
@@ -26,9 +28,9 @@ public class TelaBiblioteca extends JFrame {
         campoTitulo = new JTextField();
         campoMatricula = new JTextField();
 
-        campos.add(new JLabel("Titulo do livro:"));
+        campos.add(new JLabel("Título do livro:"));
         campos.add(campoTitulo);
-        campos.add(new JLabel("Matricula do leitor:"));
+        campos.add(new JLabel("Matrícula do leitor:"));
         campos.add(campoMatricula);
 
         add(campos, BorderLayout.NORTH);
@@ -52,7 +54,6 @@ public class TelaBiblioteca extends JFrame {
 
         add(botoes, BorderLayout.SOUTH);
 
-        // Acoes dos botoes
         botaoEmprestar.addActionListener(e -> emprestar());
         botaoDevolver.addActionListener(e -> devolver());
         botaoAtualizar.addActionListener(e -> atualizarAcervo());
@@ -60,22 +61,57 @@ public class TelaBiblioteca extends JFrame {
         atualizarAcervo();
     }
 
+    private boolean validarCampos() {
+        String titulo = campoTitulo.getText().trim();
+        String matricula = campoMatricula.getText().trim();
+
+        if (titulo.isEmpty() || matricula.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Preencha o título do livro e a matrícula do leitor.",
+                "Campos obrigatórios",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return false;
+        }
+
+        return true;
+    }
+
     private void emprestar() {
-        String titulo = campoTitulo.getText();
-        String matricula = campoMatricula.getText();
+        if (!validarCampos()) {
+            return;
+        }
+
+        String titulo = campoTitulo.getText().trim();
+        String matricula = campoMatricula.getText().trim();
 
         biblioteca.emprestarLivro(titulo, matricula);
 
         atualizarAcervo();
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Solicitação de empréstimo processada."
+        );
     }
 
     private void devolver() {
-        String titulo = campoTitulo.getText();
-        String matricula = campoMatricula.getText();
+        if (!validarCampos()) {
+            return;
+        }
+
+        String titulo = campoTitulo.getText().trim();
+        String matricula = campoMatricula.getText().trim();
 
         biblioteca.devolverLivro(titulo, matricula);
 
         atualizarAcervo();
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Solicitação de devolução processada."
+        );
     }
 
     private void atualizarAcervo() {
@@ -91,7 +127,7 @@ public class TelaBiblioteca extends JFrame {
         );
 
         biblioteca.cadastrarLivro(
-            new Livro("Capitaes da Areia", "Jorge Amado", 1937)
+            new Livro("Capitães da Areia", "Jorge Amado", 1937)
         );
 
         biblioteca.cadastrarLeitor(

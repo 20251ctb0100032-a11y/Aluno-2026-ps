@@ -4,14 +4,13 @@ public class TesteLivroDAO {
 
         LivroDAO dao = new LivroDAO();
 
-        boolean resultado = dao.adicionarLivro(
-            "Dom Casmurro",
-            "Machado de Assis",
-            1899
-        );
+        boolean excluido1 = dao.excluirLivro(2);
+        System.out.println("O Pequeno Príncipe excluído: " + excluido1);
 
-        System.out.println(
-            "Livro adicionado: " + resultado
-        );
+        boolean excluido2 = dao.excluirLivro(3);
+        System.out.println("Dom Casmurro excluído: " + excluido2);
+
+        boolean excluido3 = dao.excluirLivro(4);
+        System.out.println("O Hobbit excluído: " + excluido3);
     }
 }

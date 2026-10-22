@@ -10,11 +10,8 @@ public class Conexao {
     public static Connection conectar()
             throws SQLException {
 
-        String usuario =
-            System.getenv("DB_USER");
-
-        String senha =
-            System.getenv("DB_PASSWORD");
+        String usuario = System.getenv("DB_USER");
+        String senha = System.getenv("DB_PASSWORD");
 
         if (usuario == null || senha == null) {
             throw new SQLException(
