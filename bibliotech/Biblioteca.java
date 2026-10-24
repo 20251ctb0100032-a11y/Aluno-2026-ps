@@ -1,16 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Biblioteca {
-
-    private ArrayList<Livro> livros;
-    private ArrayList<Leitor> leitores;
-    private ArrayList<Emprestimo> emprestimos;
-
-    public Biblioteca() {
-        livros = new ArrayList<Livro>();
-        leitores = new ArrayList<Leitor>();
-        emprestimos = new ArrayList<Emprestimo>();
-    }
+    private List<Livro> livros = new ArrayList<>();
+    private List<Leitor> leitores = new ArrayList<>();
+    private List<Emprestimo> emprestimos = new ArrayList<>();
 
     public void cadastrarLivro(Livro livro) {
         livros.add(livro);
@@ -20,68 +14,82 @@ public class Biblioteca {
         leitores.add(leitor);
     }
 
-    public void listarAcervo() {
-        System.out.println("--- Acervo ---");
-
-        for (Livro livro : livros) {
-            System.out.println(livro);
-        }
-    }
-
     public Livro buscarLivro(String titulo) {
-        for (Livro livro : livros) {
-            if (livro.getTitulo().equals(titulo)) {
-                return livro;
+        for (Livro l : livros) {
+            if (l.getTitulo().equalsIgnoreCase(titulo)) {
+                return l;
             }
         }
-
         return null;
     }
 
     public Leitor buscarLeitor(String matricula) {
-        for (Leitor leitor : leitores) {
-            if (leitor.getMatricula().equals(matricula)) {
-                return leitor;
+        for (Leitor le : leitores) {
+            if (le.getMatricula().equals(matricula)) {
+                return le;
             }
         }
-
         return null;
     }
 
     public boolean emprestar(String titulo, String matricula) {
-        Livro livro = buscarLivro(titulo);
-        Leitor leitor = buscarLeitor(matricula);
+        Livro l = buscarLivro(titulo);
+        Leitor le = buscarLeitor(matricula);
 
-        if (livro == null || leitor == null) {
-            return false;
-        }
-
-        Emprestimo emprestimo = new Emprestimo(livro, leitor);
-
-        if (!emprestimo.realizarEmprestimo()) {
-            return false;
-        }
-
-        emprestimos.add(emprestimo);
-        return true;
-    }
-
-    public boolean devolver(String titulo) {
-        for (Emprestimo emprestimo : emprestimos) {
-            if (emprestimo.estaAtivo()
-                    && emprestimo.getLivro().getTitulo().equals(titulo)) {
-                return emprestimo.registrarDevolucao();
+        if (l != null && le != null) {
+            Emprestimo emp = new Emprestimo(l, le);
+            if (emp.realizarEmprestimo()) {
+                emprestimos.add(emp);
+                return true;
             }
         }
-
         return false;
     }
 
-    public void listarEmprestimos() {
-        System.out.println("--- Emprestimos ---");
+    public void emprestarLivro(String titulo, String matricula) {
+        emprestar(titulo, matricula);
+    }
 
-        for (Emprestimo emprestimo : emprestimos) {
-            System.out.println(emprestimo);
+    public boolean devolver(String titulo) {
+        for (Emprestimo e : new ArrayList<>(emprestimos)) {
+            if (e.getLivro().getTitulo().equalsIgnoreCase(titulo) && e.isAtivo()) {
+                if (e.registrarDevolucao()) {
+                    emprestimos.remove(e);
+                    return true;
+                }
+            }
         }
+        return false;
+    }
+
+    public void devolverLivro(String titulo, String matricula) {
+        devolver(titulo);
+    }
+
+    public void listarAcervo() {
+        System.out.println("=== ACERVO ===");
+        for (Livro l : livros) {
+            System.out.println(l);
+        }
+    }
+
+    public void listarEmprestimos() {
+        System.out.println("=== EMPRÉSTIMOS ATIVOS ===");
+        for (Emprestimo e : emprestimos) {
+            if (e.isAtivo()) {
+                System.out.println(e.getLivro().getTitulo() + " com " + e.getLeitor().getNome());
+            }
+        }
+    }
+
+    public String obterAcervoComoTexto() {
+        if (livros.isEmpty()) {
+            return "Nenhum livro cadastrado no acervo.";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Livro l : livros) {
+            sb.append(l.toString()).append("\n");
+        }
+        return sb.toString();
     }
 }

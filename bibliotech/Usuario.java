@@ -1,13 +1,10 @@
 /*
- * Disciplina: 2026-PS
+ * Disciplina: 2026-P5
  * Projeto   : bibliotech
  * Arquivo   : Usuario.java
- * Autor     : Luiz Carlos Oliveira Neto
- * Descricao : a classe geral do diagrama. Leitor e Bibliotecari
  */
 
-public class Usuario {
-
+public abstract class Usuario {
     private String nome;
     private String matricula;
 
@@ -22,14 +19,5 @@ public class Usuario {
 
     public String getMatricula() {
         return matricula;
-    }
-
-    // entrar(): a operacao da caixa. Regra provisoria: entra qu
-    public boolean entrar() {
-        return !matricula.isEmpty();
-    }
-
-    public String toString() {
-        return nome + " (" + matricula + ")";
     }
 }

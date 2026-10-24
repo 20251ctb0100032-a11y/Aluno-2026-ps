@@ -1,45 +1,38 @@
-/*
- * Disciplina: 2026-PS
- * Projeto   : bibliotech
- * Arquivo   : Leitor.java
- * Autor     : Luiz Carlos Oliveira Neto
- * Descricao : Leitor E UM TIPO DE Usuario: herda nome, matricula
- */
-
 public class Leitor extends Usuario {
-
     private int limiteEmprestimos;
-    private int livrosEmMaos;
+    private int livrosEnMaos;
 
     public Leitor(String nome, String matricula, int limiteEmprestimos) {
         super(nome, matricula);
         this.limiteEmprestimos = limiteEmprestimos;
-        this.livrosEmMaos = 0;
+        this.livrosEnMaos = 0;
     }
 
-    public int getLimiteEmprestimos() {
-        return limiteEmprestimos;
+    public Leitor(String nome, String matricula) {
+        this(nome, matricula, 2);
     }
 
-    public int getLivrosEmMaos() {
-        return livrosEmMaos;
-    }
+    public int getLimiteEmprestimos() { return limiteEmprestimos; }
+    public int getLivrosEnMaos() { return livrosEnMaos; }
 
     public boolean podePegarEmprestado() {
-        return livrosEmMaos < limiteEmprestimos;
+        return livrosEnMaos < limiteEmprestimos;
     }
 
     public void pegueiLivro() {
-        this.livrosEmMaos = this.livrosEmMaos + 1;
+        if (podePegarEmprestado()) {
+            livrosEnMaos++;
+        }
     }
 
-    public void devolveuLivro() {
-        this.livrosEmMaos = this.livrosEmMaos - 1;
+    public void devolviLivro() {
+        if (livrosEnMaos > 0) {
+            livrosEnMaos--;
+        }
     }
 
     @Override
     public String toString() {
-        return "Leitor: " + getNome() + " (" + getMatricula() + ") - "
-                + livrosEmMaos + " de " + limiteEmprestimos + " livros";
+        return "Leitor: " + getNome() + " (Matrícula: " + getMatricula() + ")";
     }
 }

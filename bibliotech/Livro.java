@@ -1,58 +1,47 @@
-/*
- * Disciplina: 2026-PS
- * Projeto   : bibliotech
- * Arquivo   : Livro.java
- * Autor     : Luiz Carlos Oliveira Neto
- * Descricao : a caixa "Livro" do diagrama de classes, em Java (Aula 37).
- */
-
 public class Livro {
-
-    // ATRIBUTOS: a faixa do meio da caixa, um por linha, todos private.
     private String titulo;
     private String autor;
     private int ano;
-    private boolean disponivel; // nao estava na caixa: o codigo pediu
+    private boolean emprestado;
 
-    // CONSTRUTOR: inicializa os atributos ao criar o objeto
     public Livro(String titulo, String autor, int ano) {
         this.titulo = titulo;
         this.autor = autor;
         this.ano = ano;
-        this.disponivel = true; // todo livro nasce na estante
+        this.emprestado = false;
     }
 
-    // GETTERS: as janelas de leitura.
-    public String getTitulo() {
-        return titulo;
+    public Livro(String titulo, String autor) {
+        this(titulo, autor, 0);
     }
 
-    public String getAutor() {
-        return autor;
-    }
+    public String getTitulo() { return titulo; }
+    public String getAutor() { return autor; }
+    public int getAno() { return ano; }
 
-    public int getAno() {
-        return ano;
-    }
-
-    // OPERAÇÃO DA CAIXA: estaDisponivel(), a faixa de baixo do diagrama.
     public boolean estaDisponivel() {
-        return disponivel;
+        return !emprestado;
     }
 
-    // Os dois metodos que o emprestimo vai usar na Aula 38.
+    public boolean isEmprestado() {
+        return emprestado;
+    }
+
+    public void setEmprestado(boolean emprestado) {
+        this.emprestado = emprestado;
+    }
+
     public void emprestar() {
-        this.disponivel = false;
+        this.emprestado = true;
     }
 
     public void devolver() {
-        this.disponivel = true;
+        this.emprestado = false;
     }
 
-    // toString: como a ficha se apresenta (Aula 34).
     @Override
     public String toString() {
-        String situacao = disponivel ? "disponivel" : "emprestado";
-        return titulo + " (" + autor + ", " + ano + ") - " + situacao;
+        String status = emprestado ? "[EMPRESTADO]" : "[DISPONÍVEL]";
+        return status + " " + titulo + " - " + autor;
     }
 }

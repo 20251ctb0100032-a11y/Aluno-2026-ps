@@ -1,3 +1,8 @@
+/*
+ * Disciplina: 2026-P5
+ * Projeto   : bibliotech
+ * Arquivo   : TelaBiblioteca.java
+ */
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -87,7 +92,6 @@ public class TelaBiblioteca extends JFrame {
         String matricula = campoMatricula.getText().trim();
 
         biblioteca.emprestarLivro(titulo, matricula);
-
         atualizarAcervo();
 
         JOptionPane.showMessageDialog(
@@ -105,7 +109,6 @@ public class TelaBiblioteca extends JFrame {
         String matricula = campoMatricula.getText().trim();
 
         biblioteca.devolverLivro(titulo, matricula);
-
         atualizarAcervo();
 
         JOptionPane.showMessageDialog(
@@ -115,8 +118,10 @@ public class TelaBiblioteca extends JFrame {
     }
 
     private void atualizarAcervo() {
-        areaAcervo.setText(biblioteca.obterAcervoComoTexto());
-        areaAcervo.setCaretPosition(0);
+        if (biblioteca != null) {
+            areaAcervo.setText(biblioteca.obterAcervoComoTexto());
+            areaAcervo.setCaretPosition(0);
+        }
     }
 
     public static void main(String[] args) {
