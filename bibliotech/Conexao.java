@@ -6,21 +6,14 @@ public class Conexao {
 
     private static final String URL =
         "jdbc:mariadb://localhost:3306/bibliotech";
+    private static final String USUARIO = "bibliotech";
+    private static final String SENHA = "LC"; 
 
     public static Connection conectar()
             throws SQLException {
 
-        String usuario = System.getenv("DB_USER");
-        String senha = System.getenv("DB_PASSWORD");
-
-        if (usuario == null || senha == null) {
-            throw new SQLException(
-                "Configure DB_USER e DB_PASSWORD."
-            );
-        }
-
         return DriverManager.getConnection(
-            URL, usuario, senha
+            URL, USUARIO, SENHA
         );
     }
 }
