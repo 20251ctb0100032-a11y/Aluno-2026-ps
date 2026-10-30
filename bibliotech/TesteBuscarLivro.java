@@ -18,7 +18,8 @@ public class TesteBuscarLivro {
 
         int id = entrada.nextInt();
 
-        String livro = dao.buscarLivroPorId(id);
+        // Alterado de String para Livro
+        Livro livro = dao.buscarLivroPorId(id);
 
         if (livro != null) {
 
@@ -26,7 +27,12 @@ public class TesteBuscarLivro {
                 "Livro encontrado:"
             );
 
-            System.out.println(livro);
+            System.out.println(
+                livro.getId() + " - " +
+                livro.getTitulo() + " - " +
+                livro.getAutor() + " (" +
+                livro.getAno() + ")"
+            );
 
         } else {
 

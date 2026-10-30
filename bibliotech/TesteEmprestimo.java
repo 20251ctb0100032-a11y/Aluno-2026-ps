@@ -1,15 +1,17 @@
-
 public class TesteEmprestimo {
 
     public static void main(String[] args) {
 
+        // Instanciação ajustada para incluir o ID do banco de dados
         Livro livro = new Livro(
+            1,
             "Dom Casmurro",
             "Machado de Assis",
             1899
         );
 
         Livro outroLivro = new Livro(
+            2,
             "Capitães da Areia",
             "Jorge Amado",
             1937

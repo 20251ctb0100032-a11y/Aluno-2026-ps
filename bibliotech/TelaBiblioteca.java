@@ -127,12 +127,13 @@ public class TelaBiblioteca extends JFrame {
     public static void main(String[] args) {
         Biblioteca biblioteca = new Biblioteca();
 
+        // Instanciação de livros incluindo os IDs equivalentes aos do MariaDB
         biblioteca.cadastrarLivro(
-            new Livro("Dom Casmurro", "Machado de Assis", 1899)
+            new Livro(1, "Dom Casmurro", "Machado de Assis", 1899)
         );
 
         biblioteca.cadastrarLivro(
-            new Livro("Capitães da Areia", "Jorge Amado", 1937)
+            new Livro(2, "Capitães da Areia", "Jorge Amado", 1937)
         );
 
         biblioteca.cadastrarLeitor(
